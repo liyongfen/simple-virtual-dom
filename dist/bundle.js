@@ -54,6 +54,7 @@ function dfsWalk(oldNode, newNode, index, patches) {
 }
 
 function diffChildren(oldChildren, newChildren, index, patches, currentPatch) {
+    console.log(oldChildren, newChildren);
     var diffs = listDiff2.diff(oldChildren, newChildren, 'key')
     newChildren = diffs.children
 
@@ -66,9 +67,7 @@ function diffChildren(oldChildren, newChildren, index, patches, currentPatch) {
     var currentNodeIndex = index
     _.each(oldChildren, function (child, i) {
         var newChild = newChildren[i]
-        currentNodeIndex = (leftNode && leftNode.count)
-            ? currentNodeIndex + leftNode.count + 1
-            : currentNodeIndex + 1
+        currentNodeIndex = (leftNode && leftNode.count) ? currentNodeIndex + leftNode.count + 1 : currentNodeIndex + 1
         dfsWalk(child, newChild, currentNodeIndex, patches)
         leftNode = child
     })
@@ -138,9 +137,7 @@ function Element(tagName, props, children) {
     this.tagName = tagName
     this.props = props || {}
     this.children = children || []
-    this.key = props
-        ? props.key
-        : void 666
+    this.key = props ? props.key : void 666
 
     var count = 0
 
@@ -285,12 +282,12 @@ function diff(oldList, newList, key) {
 
 
     function remove(index) {
-        var move = { index: index, type: 0 }
+        var move = { index: index, type: 0 } //0 删除
         moves.push(move)
     }
 
     function insert(index, item) {
-        var move = { index: index, item: item, type: 1 }
+        var move = { index: index, item: item, type: 1 } //1 插入
         moves.push(move)
     }
 
@@ -329,9 +326,7 @@ function makeKeyIndexAndFree(list, key) {
 
 function getItemKey(item, key) {
     if (!item || !key) return void 666
-    return typeof key === 'string'
-        ? item[key]
-        : key(item)
+    return typeof key === 'string' ? item[key] : key(item)
 }
 
 exports.makeKeyIndexAndFree = makeKeyIndexAndFree // exports for test
