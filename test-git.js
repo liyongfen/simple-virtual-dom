@@ -1,1 +1,1 @@
-var test = 'hello worldxxxxx';
+var test = 'hello world';
